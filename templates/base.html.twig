@@ -2,8 +2,8 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <title>{% block title %} ScoutReady{% endblock %}</title>
+        <link rel="icon" href="">
         {% block stylesheets %}
         {% endblock %}
 
@@ -12,6 +12,108 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+    <div class="cover-overlay">
+        <div class="overlay-layer"></div>
+        <div class="wrapper">
+            <header>
+                <div class="menu-header">
+                    <div class="container-fluid d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-2">
+                            <a href="#" class="brand-bar"><i class="bi bi-list"></i></a>
+                            <a href="#" class="sr-logo">
+                                <img src="{{ absolute_url(asset('images/favico.png')) }}" alt="" class="sr-logo-img">
+                                <span class="sr-logo-text">ScoutReady</span>
+                            </a>
+                        </div>
+                        <ul class="nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="bi bi-bell"></i></a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    <img src="{{ absolute_url(asset('images/avatar.jpg')) }}" alt="" class="avatar rounded-circle">
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-person-square"></i>
+                                            Profile</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Messages</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-unlock"></i> Déconnexion</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+            <main>
+                <aside id="sidebar" class="menu-vertical">
+                    <div class="mobile-close d-md-none text-end p-2">
+                        <button class="btn btn-sm btn-outline-secondary close-menu">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+
+                    <ul class="nav flex-column">
+                        <li class="nav-item label">
+                            <label for="">Tableau de bord</label>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-bar-chart"></i>
+                                Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="bi bi-graph-up-arrow"></i> Analytics</a>
+                        </li>
+                        <li class="nav-item label">
+                            <label for="">Rubriques</label>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="table.html"><i class="bi bi-dice-6"></i> ASN</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"><i class="bi bi-dice-5"></i> Région</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"><i class="bi bi-dice-4"></i> Districts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"><i class="bi bi-dice-3"></i> Groupes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"><i class="bi bi-people"></i> Scouts</a>
+                        </li>
+                        <li class="nav-item label">
+                            <label for="">Actions</label>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"><i class="bi bi-ui-checks"></i> Activités</a>
+                        </li>
+
+                        <li class="nav-item label">
+                            <label for="">Paramètres</label>
+                        </li>
+                        <li class="nav-item">
+                            <a href="connexion.html" class="nav-link"><i class="bi bi-lock"></i> Sécurité</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link"><i class="bi bi-person-fill-lock"></i> Utilisateurs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link"><i class="bi bi-graph-up"></i> Monitoring</a>
+                        </li>
+                    </ul>
+                </aside>
+                {% block body %}{% endblock %}
+
+            </main>
+
+        </div>
+    </div>
+{#    <script src="{{ asset('assets/menu-_W3Eq_Y.js') }}"></script>#}
     </body>
 </html>
