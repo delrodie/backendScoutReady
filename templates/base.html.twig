@@ -2,13 +2,14 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %} ScoutReady{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}
+                ScoutReady :: {% block extra_title %}{% endblock %}
+            {% endblock %}</title>
         <link rel="icon" href="">
         {% block stylesheets %}
-        {% endblock %}
-
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            {% block extra_stylesheets %}{% endblock %}
+            <link rel="stylesheet" href="{{ absolute_url(asset('styles/app.css')) }}">
         {% endblock %}
     </head>
     <body>
@@ -63,7 +64,7 @@
                             <label for="">Tableau de bord</label>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-bar-chart"></i>
+                            <a class="nav-link active" aria-current="page" href="{{ absolute_url(path('app_dashboard')) }}"><i class="bi bi-bar-chart"></i>
                                 Dashboard</a>
                         </li>
                         <li class="nav-item">
@@ -73,7 +74,7 @@
                             <label for="">Rubriques</label>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="table.html"><i class="bi bi-dice-6"></i> ASN</a>
+                            <a class="nav-link" href="{{ absolute_url(path('app_asn_list')) }}"><i class="bi bi-dice-6"></i> ASN</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"><i class="bi bi-dice-5"></i> Région</a>
@@ -114,6 +115,11 @@
 
         </div>
     </div>
+
+    {% block javascripts %}
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% block extra_javascripts %}{% endblock %}
+    {% endblock %}
 {#    <script src="{{ asset('assets/menu-_W3Eq_Y.js') }}"></script>#}
     </body>
 </html>

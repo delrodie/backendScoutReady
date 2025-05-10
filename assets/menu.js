@@ -1,4 +1,4 @@
-    document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("turbo:load", function () {
         const menuToggle = document.querySelector(".brand-bar");
         const menuVertical = document.querySelector(".menu-vertical");
         const mainContent = document.getElementById("mainContent");
