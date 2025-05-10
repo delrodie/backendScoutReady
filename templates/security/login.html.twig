@@ -1,0 +1,88 @@
+{% extends 'security_layout.html.twig' %}
+
+{% block extra_title %}Sécurité{% endblock %}
+
+{% block body %}
+    <main class="connexion">
+        <div id="mainContent" class="main-content expanded">
+            <div class="row connexion-content">
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-md-2 offset-lg-3 offset-xl-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Connexion</h5>
+
+                            <form method="post" class="row formulaire needs-validation mt-5">
+                                {% if error %}
+                                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                {% endif %}
+
+                                {% if app.user %}
+                                    <div class="mb-3">
+                                        Tu es connecté entant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
+                                    </div>
+                                {% endif %}
+
+                                <div class="col-12 mt-3">
+                                    <label for="username" class="form-label">Adresse email<span>*</span></label>
+                                    <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control form-control-lg" autocomplete="email" required autofocus>
+                                    <div class="invalid-feedback">L'email est obligatoire</div>
+                                </div>
+
+                                <div class="col-12 mt-3">
+                                    <label for="password" class="forom-label">Mot de passe <span>*</span> </label>
+                                    <input type="password" name="_password" id="password" class="form-control form-control-lg" autocomplete="current-password" required>
+                                    <div class="invalid-feedback">Le mot de passe est obligatoire</div>
+                                </div>
+
+                                <div class="col-12 mt-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="_remember_me" id="_remember_me">
+                                        <label class="form-check-label" for="_remember_me">
+                                            Se souvenir de moi
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+
+                                {#
+                                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                                See https://symfony.com/doc/current/security/remember_me.html
+
+                                <div class="checkbox mb-3">
+                                    <input type="checkbox" name="_remember_me" id="_remember_me">
+                                    <label for="_remember_me">Remember me</label>
+                                </div>
+                                #}
+
+                                <div class="col-12 mt-5 d-grid gap-2">
+                                    <button class="btn btn-blue">Connexion</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block extra_javascripts %}
+    <script>
+        (() => {
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+{% endblock %}

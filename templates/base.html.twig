@@ -6,7 +6,7 @@
         <title>{% block title %}
                 ScoutReady :: {% block extra_title %}{% endblock %}
             {% endblock %}</title>
-        <link rel="icon" href="">
+        <link rel="icon" href="{{ absolute_url(asset('images/favico.png')) }}">
         {% block stylesheets %}
             {% block extra_stylesheets %}{% endblock %}
             <link rel="stylesheet" href="{{ absolute_url(asset('styles/app.css')) }}">
