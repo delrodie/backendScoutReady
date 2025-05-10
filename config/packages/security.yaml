@@ -2,7 +2,7 @@ security:
     role_hierarchy:
         ROLE_REGION: ROLE_USER
         ROLE_ASN: ROLE_REGION
-        ROLE_ADMIN: ROLE_REGION
+        ROLE_ADMIN: ROLE_ASN
         ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
