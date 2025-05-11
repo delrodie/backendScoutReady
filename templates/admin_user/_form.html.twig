@@ -1,0 +1,40 @@
+<turbo-frame id="_top">
+    {{ form_start(form, { 'attr':{ 'class': 'formulaire g-3 needs-validation', 'novalidate':'novalidate', 'data-turbo': 'false' } }) }}
+    <div class="row form-group">
+
+        <div class="col-12 mt-3">
+            {{ form_row(form.email) }}
+        </div>
+        <div class="col-12 mt-3">
+            {{ form_row(form.password) }}
+        </div>
+        <div class="col-12 mt-3">
+            {% for role in form.roles %}
+                <div class="form-check">
+                    {{ form_widget(role,{"attr":{"class":"form-check-input"}}) }}
+                    {{ form_label(role) }}
+                </div>
+            {% endfor %}
+        </div>
+        {% if form.roles.vars.errors|length %}
+            <div class="invalid-feedback d-block">
+                {% for error in form.roles.vars.errors %}
+                    <div>{{ error.message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div id="loadingSpinner" class="spinner-border text-primary" role="status" style="display: none;">
+            <span class="visually-hidden">Chargement...</span>
+        </div>
+
+        <div class="col-12 mt-5 text-end">
+            {{ form_widget(form) }}
+            {#            <button class="btn btn-red btn-sm"><span class="icon supprimer">Supprimer</span> </button>#}
+            <a href="{{ path('app_admin_user_index') }}" class="btn btn-transparent btn-sm"><span class="icon annuler">Annuler</span></a>
+            <button type="submit" class="btn btn-blue btn-sm"> <span class="icon ajouter">{{ button_label|default('Ajouter') }}</span> </button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+</turbo-frame>
+
+

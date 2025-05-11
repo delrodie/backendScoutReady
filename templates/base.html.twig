@@ -43,7 +43,7 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-unlock"></i> Déconnexion</a>
+                                    <li><a class="dropdown-item" href="{{ absolute_url(path('app_logout')) }}"><i class="bi bi-unlock"></i> Déconnexion</a>
                                     </li>
                                 </ul>
                             </li>
@@ -99,7 +99,7 @@
                             <label for="">Paramètres</label>
                         </li>
                         <li class="nav-item">
-                            <a href="connexion.html" class="nav-link"><i class="bi bi-lock"></i> Sécurité</a>
+                            <a href="{{ absolute_url(path('app_admin_user_index')) }}" class="nav-link"><i class="bi bi-lock"></i> Sécurité</a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link"><i class="bi bi-person-fill-lock"></i> Utilisateurs</a>

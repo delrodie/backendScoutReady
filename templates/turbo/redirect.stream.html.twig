@@ -1,0 +1,9 @@
+{% extends '@Turbo/components/Stream.html.twig' %}
+
+{% block turbo_stream %}
+    <turbo-stream action="redirect" target="main">
+        <template>
+            <meta http-equiv="refresh" content="0;url={{ url }}">
+        </template>
+    </turbo-stream>
+{% endblock %}
