@@ -63,6 +63,7 @@
     <script>
         document.addEventListener('turbo:load', function () {
             const table = document.querySelector('#liste');
+
             if (table && !table.classList.contains('dataTable-initialized')) {
                 new DataTable(table, {
                     layout: {
@@ -80,11 +81,9 @@
                         }
                     }
                 });
-
                 table.classList.add('dataTable-initialized'); // éviter la double initialisation
             }
         });
-
     </script>
     {#    <script>#}
     {#        new DataTable('#liste', {#}
