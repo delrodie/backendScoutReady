@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserForm;
 use App\Repository\UserRepository;
+use App\Services\UserActionLogger;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +20,7 @@ final class AdminUserController extends AbstractController
 {
     public function __construct(
         private UserPasswordHasherInterface $passwordHasher,
+        private readonly UserActionLogger $userActionLogger, 
     )
     {
     }
@@ -26,6 +28,7 @@ final class AdminUserController extends AbstractController
     #[Route(name: 'app_admin_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
+        $this->userActionLogger->log("Consultation des utilisateurs", ['action' => ' a consulter la liste des utilisateurs'] );
         return $this->render('admin_user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
@@ -45,6 +48,8 @@ final class AdminUserController extends AbstractController
                 );
                 $entityManager->persist($user);
                 $entityManager->flush();
+
+                $this->userActionLogger->log("Enregistrement d'utilisateur",['action' => " a enregistré l'utilisateur {$user->getUserIdentifier()}"]);
 
                 return  $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
 

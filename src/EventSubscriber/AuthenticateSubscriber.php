@@ -4,6 +4,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Services\UserActionLogger;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Event\AuthenticationSuccessEvent;
@@ -11,7 +12,7 @@ use Symfony\Component\Security\Core\Event\AuthenticationSuccessEvent;
 class AuthenticateSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager, private readonly UserActionLogger $userActionLogger
     )
     {
     }
@@ -27,6 +28,10 @@ class AuthenticateSubscriber implements EventSubscriberInterface
             $user->setLastConnectedAt(new \DateTimeImmutable());
 
             $this->entityManager->flush();
+
+            $this->userActionLogger->log(UserActionLogger::MESSAGE_CONNEXION, [
+                'action' => $user->getUserIdentifier(). UserActionLogger::ACTION_CONNEXION,
+            ]);
         }
     }
 

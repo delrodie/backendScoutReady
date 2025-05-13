@@ -1,6 +1,7 @@
 monolog:
     channels:
         - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
+        - user_actions
 
 when@dev:
     monolog:
@@ -22,6 +23,15 @@ when@dev:
                 type: console
                 process_psr_3_messages: false
                 channels: ["!event", "!doctrine", "!console"]
+            user_actions:
+                type: stream
+#                type: rotating_file
+                path: "%kernel.logs_dir%/user_actions.log"
+                level: info
+                channels: ['user_actions']
+#                max_files: 30  # Nombre maximum de fichiers à conserver
+#                file_permission: 0664
+#                formatter: monolog.formatter.line
 
 when@test:
     monolog:
@@ -36,6 +46,10 @@ when@test:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
                 level: debug
+            user_actions:
+                type: rotating_file
+                path: "%kernel.logs_dir%/user_actions.log"
+                level: info
 
 when@prod:
     monolog:
@@ -60,3 +74,7 @@ when@prod:
                 channels: [deprecation]
                 path: php://stderr
                 formatter: monolog.formatter.json
+            user_actions:
+                type: stream
+                path: "%kernel.logs_dir%/user_actions.log"
+                level: info

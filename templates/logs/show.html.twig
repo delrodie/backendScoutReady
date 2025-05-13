@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Logs des actions utilisateurs{% endblock %}
+
+{% block body %}
+    <div id="mainContent" class="main-content expanded">
+        <div class="content">
+            <h4 class="content-label">Gestion des utilisateurs</h4>
+
+            <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+                <h6 class="content-title">Liste des utilisateurs</h6>
+                <a href="{{ absolute_url(path('app_admin_user_new')) }}" class="btn btn-blue"><span class="icon ajouter">Ajouter</span> </a>
+            </div>
+
+            <div class="table-responsive">
+                <table id="liste" class="table table-striped table-hover table-sm table-liste text-nowrap">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Utilisateur</th>
+                        <th>Action</th>
+                        <th>IP</th>
+                        <th>Détails</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for log in logs %}
+                        {% set user_type = log.context.device_type|default('')  %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ log.context.datetime|default('') }}</td>
+                            <td>{{ log.context.user|default('') }}</td>
+                            <td>{{ log.message }}</td>
+                            <td>
+                                <a href="http://ip-api.com/json/{{ log.context.ip|default('') }}?fields=city,country" target="_blank">{{ log.context.ip|default('') }}</a>
+                            </td>
+                            <td>
+                                {{ log.context.user|default('') }} {{ log.context.action|default('') }} via
+                                {{ log.context.device_type|default('') == 'tableette'  ? 'une ' ~ user_type : 'un ' ~ user_type}}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">Aucun log disponible</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block extra_stylesheets %}
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.3/css/buttons.dataTables.css">
+{% endblock %}
+{% block extra_javascripts %}
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.3/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.html5.min.js"></script>
+    <script>
+        document.addEventListener('turbo:load', function () {
+            const table = document.querySelector('#liste');
+
+            if (table && !table.classList.contains('dataTable-initialized')) {
+                new DataTable(table, {
+                    layout: {
+                        topStart: {
+                            buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']
+                        }
+                    },
+                    language: {
+                        url: 'https://cdn.datatables.net/plug-ins/2.3.0/i18n/fr-FR.json',
+                        paginate: {
+                            first: "Première",
+                            last: "Dernière",
+                            next: "Suiv",
+                            previous: "Préc"
+                        }
+                    }
+                });
+                table.classList.add('dataTable-initialized'); // éviter la double initialisation
+            }
+        });
+    </script>
+    {#    <script>#}
+    {#        new DataTable('#liste', {#}
+    {#            layout: {#}
+    {#                topStart: {#}
+    {#                    buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']#}
+    {#                }#}
+    {#            },#}
+    {#            language: {#}
+    {#                url: 'https://cdn.datatables.net/plug-ins/2.3.0/i18n/fr-FR.json',#}
+    {#                "paginate": {#}
+    {#                    "first": "Première",#}
+    {#                    "last": "Dernière",#}
+    {#                    "next": "Suiv",#}
+    {#                    "previous": "Préc"#}
+    {#                },#}
+    {#            },#}
+    {#        });#}
+    {#    </script>#}
+{% endblock %}
