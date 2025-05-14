@@ -28,7 +28,7 @@ final class AdminUserController extends AbstractController
     #[Route(name: 'app_admin_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
-        $this->userActionLogger->log("Consultation des utilisateurs", ['action' => ' a consulter la liste des utilisateurs'] );
+//        $this->userActionLogger->log("Consultation des utilisateurs", ['action' => ' a consulter la liste des utilisateurs'] );
         return $this->render('admin_user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
@@ -49,7 +49,7 @@ final class AdminUserController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                $this->userActionLogger->log("Enregistrement d'utilisateur",['action' => " a enregistré l'utilisateur {$user->getUserIdentifier()}"]);
+//                $this->userActionLogger->log("Enregistrement d'utilisateur",['action' => " a enregistré l'utilisateur {$user->getUserIdentifier()}"]);
 
                 return  $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
 
@@ -98,6 +98,8 @@ final class AdminUserController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
+
+            $this->userActionLogger->log("Suppression d'utilisateur",['action'=>" a supprimer l'utilisateur {$user->getUserIdentifier()}"]);
         }
 
         return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);

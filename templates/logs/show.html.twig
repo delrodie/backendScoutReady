@@ -21,6 +21,7 @@
                         <th>Utilisateur</th>
                         <th>Action</th>
                         <th>IP</th>
+                        <th>Canal</th>
                         <th>Détails</th>
                     </tr>
                     </thead>
@@ -35,9 +36,9 @@
                             <td>
                                 <a href="http://ip-api.com/json/{{ log.context.ip|default('') }}?fields=city,country" target="_blank">{{ log.context.ip|default('') }}</a>
                             </td>
+                            <td>{{ user_type }}</td>
                             <td>
-                                {{ log.context.user|default('') }} {{ log.context.action|default('') }} via
-                                {{ log.context.device_type|default('') == 'tableette'  ? 'une ' ~ user_type : 'un ' ~ user_type}}
+                                {{ log.context.user|default('') }} {{ log.context.action|default('') }}
                             </td>
                         </tr>
                     {% else %}
