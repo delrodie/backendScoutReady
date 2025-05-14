@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block extra_title %} Nouveau utilisateur {% endblock %}
+{% block body %}
+    <div id="mainContent" class="main-content expanded">
+        <div class="content">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 col-xl-6 offset-md-1 offset-lg-2 offset-xl-3">
+                    <h4 class="content-label">Gestion des utilisateurs</h4>
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+                        <h6 class="content-title">Nouvel utilisateur</h6>
+                        <a href="{{ absolute_url(path('app_api_credential_index')) }}" class="btn btn-blue"><span class="icon liste">Liste</span> </a>
+                    </div>
+
+                    <div class="card mt-5">
+                        <div class="card-body">
+                            {{ include('api_credential/_form.html.twig') }}
+                        </div>
+                    </div>
+
+                    <div id="loader-overlay" style="display: none;">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Chargement...</span>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_stylesheets %}
+    <style>
+        .turbo-frame-error{
+            font-style: italic;
+            color: yellow;
+        }
+
+        .formulaire ul{
+            list-style: none;
+        }
+        .formulaire ul li{
+            font-style: italic;
+            color: yellow;
+        }
+    </style>
+
+{% endblock %}
+
+{% block extra_javascripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector(".formulaire");
+            const submitButton = document.querySelector("button[type='submit']");
+
+            form.addEventListener("submit", function () {
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Traitement...';
+            });
+        });
+
+    </script>
+{% endblock %}

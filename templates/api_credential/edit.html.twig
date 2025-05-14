@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ApiCredential{% endblock %}
+
+{% block body %}
+    <h1>Edit ApiCredential</h1>
+
+    {{ include('api_credential/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_api_credential_index') }}">back to list</a>
+
+    {{ include('api_credential/_delete_form.html.twig') }}
+{% endblock %}

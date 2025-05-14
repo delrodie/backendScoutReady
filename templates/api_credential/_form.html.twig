@@ -1,0 +1,17 @@
+{{ form_start(form, {attr:{'class':'formulaire'}}) }}
+<div class="row form-group">
+    <div class="col-12 mt-3">{{ form_row(form.url) }}</div>
+    <div class="col-12 mt-3">{{ form_row(form.apikey) }}</div>
+    <div class="col-12 mt-3 form-check mx-3">
+        {{ form_widget(form.status) }}
+        {{ form_label(form.status) }}
+        {{ form_errors(form.status) }}
+    </div>
+    <div class="col-12 mt-5 text-end">
+        {{ form_widget(form) }}
+        {#            <button class="btn btn-red btn-sm"><span class="icon supprimer">Supprimer</span> </button>#}
+        <a href="{{ path('app_admin_user_index') }}" class="btn btn-transparent btn-sm"><span class="icon annuler">Annuler</span></a>
+        <button type="submit" class="btn btn-blue btn-sm"> <span class="icon ajouter">{{ button_label|default('Ajouter') }}</span> </button>
+    </div>
+</div>
+{{ form_end(form) }}

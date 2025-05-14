@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250510130415 extends AbstractMigration
+final class Version20250514124551 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,6 +20,9 @@ final class Version20250510130415 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql(<<<'SQL'
+            CREATE TABLE api_credential (id INT AUTO_INCREMENT NOT NULL, url VARCHAR(255) NOT NULL, apikey VARCHAR(255) DEFAULT NULL, status TINYINT(1) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
+        SQL);
         $this->addSql(<<<'SQL'
             CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, connexion INT DEFAULT NULL, last_connected_at DATETIME DEFAULT NULL COMMENT '(DC2Type:datetime_immutable)', UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
         SQL);
@@ -31,6 +34,9 @@ final class Version20250510130415 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql(<<<'SQL'
+            DROP TABLE api_credential
+        SQL);
         $this->addSql(<<<'SQL'
             DROP TABLE user
         SQL);

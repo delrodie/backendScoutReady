@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ApiCredential{% endblock %}
+
+{% block body %}
+    <h1>ApiCredential</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ api_credential.id }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td>{{ api_credential.url }}</td>
+            </tr>
+            <tr>
+                <th>Apikey</th>
+                <td>{{ api_credential.apikey }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ api_credential.status ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_api_credential_index') }}">back to list</a>
+
+    <a href="{{ path('app_api_credential_edit', {'id': api_credential.id}) }}">edit</a>
+
+    {{ include('api_credential/_delete_form.html.twig') }}
+{% endblock %}
