@@ -1,34 +1,87 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}ApiCredential{% endblock %}
-
+{% block extra_title %} Details ApiKey {% endblock %}
 {% block body %}
-    <h1>ApiCredential</h1>
+    <div id="mainContent" class="main-content expanded">
+        <div class="content">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 col-xl-6 offset-md-1 offset-lg-2 offset-xl-3">
+                    <h4 class="content-label">Gestion de la clé API</h4>
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+                        <h6 class="content-title">Détails</h6>
+{#                        <a href="{{ absolute_url(path('app_api_credential_index')) }}" class="btn btn-blue"><span class="icon liste">Liste</span> </a>#}
+                    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ api_credential.id }}</td>
-            </tr>
-            <tr>
-                <th>Url</th>
-                <td>{{ api_credential.url }}</td>
-            </tr>
-            <tr>
-                <th>Apikey</th>
-                <td>{{ api_credential.apikey }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ api_credential.status ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+                    <div class="card mt-5">
+                        <div class="card-body">
+                            <form action="" class="formulaire g-3 needs-validation" id="formSubmit" novalidate>
+                                <div class="row form-group">
+                                    <div class="col-12 mt-3">
+                                        <label for="inputSigle" class="form-label">URL de l'API</label>
+                                        <input type="text" class="form-control" value="{{ api_credential.url }}" readonly>
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <label for="inputNom" class="form-label">Clé API</label>
+                                        <textarea rows="5" class="form-control" readonly>{{ api_credential.apikey }}</textarea>
+                                    </div>
+                                    <div class="col-12 mt-3 form-check mx-3">
+                                        <input type="checkbox" class="form-check-input" {{ api_credential.status ? 'checked' : false }} readonly>
+                                        <label for="" class="form-label">Statut</label>
+                                    </div>
+                                    <div class="col-12 mt-5 text-end">
+{#                                        {{ include('api_credential/_delete_form.html.twig') }}#}
 
-    <a href="{{ path('app_api_credential_index') }}">back to list</a>
+{#                                        <button class="btn btn-transparent btn-sm"><span class="icon annuler">Annuler</span></button>#}
+                                        <a href="{{ absolute_url(path('app_api_credential_edit', {'id': api_credential.id})) }}" class="btn btn-blue btn-sm"> <span class="icon modifier">Modifier</span> </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
 
-    <a href="{{ path('app_api_credential_edit', {'id': api_credential.id}) }}">edit</a>
+                    <div id="loader-overlay" style="display: none;">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Chargement...</span>
+                        </div>
+                    </div>
 
-    {{ include('api_credential/_delete_form.html.twig') }}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_stylesheets %}
+    <style>
+        .turbo-frame-error{
+            font-style: italic;
+            color: yellow;
+        }
+
+        .formulaire ul{
+            list-style: none;
+        }
+        .formulaire ul li{
+            font-style: italic;
+            color: yellow;
+        }
+    </style>
+
+{% endblock %}
+
+{% block extra_javascripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector(".formulaire");
+            const submitButton = document.querySelector("button[type='submit']");
+
+            form.addEventListener("submit", function () {
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Traitement...';
+            });
+        });
+
+    </script>
 {% endblock %}

@@ -10,7 +10,7 @@
     <div class="col-12 mt-5 text-end">
         {{ form_widget(form) }}
         {#            <button class="btn btn-red btn-sm"><span class="icon supprimer">Supprimer</span> </button>#}
-        <a href="{{ path('app_admin_user_index') }}" class="btn btn-transparent btn-sm"><span class="icon annuler">Annuler</span></a>
+        <a href="{{ path('app_api_credential_index') }}" class="btn btn-transparent btn-sm"><span class="icon annuler">Annuler</span></a>
         <button type="submit" class="btn btn-blue btn-sm"> <span class="icon ajouter">{{ button_label|default('Ajouter') }}</span> </button>
     </div>
 </div>

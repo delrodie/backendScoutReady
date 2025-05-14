@@ -1,89 +1,82 @@
 {% extends 'base.html.twig' %}
-{% block extra_title %} Liste des ApiKeys {% endblock %}
-
+{% block extra_title %} Nouveau utilisateur {% endblock %}
 {% block body %}
     <div id="mainContent" class="main-content expanded">
         <div class="content">
-            <h4 class="content-label">Gestion des ApiKeys</h4>
+            <div class="row">
+                <div class="col-md-10 col-lg-8 col-xl-6 offset-md-1 offset-lg-2 offset-xl-3">
+                    <h4 class="content-label">Gestion des utilisateurs</h4>
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+                        <h6 class="content-title">Nouvel utilisateur</h6>
+                        <a href="{{ absolute_url(path('app_api_credential_index')) }}" class="btn btn-blue"><span class="icon liste">Liste</span> </a>
+                    </div>
 
-            <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
-                <h6 class="content-title">Liste des Apikeys</h6>
-                <a href="{{ absolute_url(path('app_api_credential_new')) }}" class="btn btn-blue"><span class="icon ajouter">Ajouter</span> </a>
+                    <div class="card mt-5">
+                        <div class="card-body">
+                            <form action="" class="formulaire g-3 needs-validation" id="formSubmit" novalidate>
+                                <div class="row form-group">
+                                    <div class="col-12 mt-3">
+                                        <label for="inputSigle" class="form-label">URL de l'API</label>
+                                        <input type="text" id="inputSigle" class="form-control" placeholder="Sigle de l'ASN" required>
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <label for="inputNom" class="form-label">Nom</label>
+                                        <input type="text" id="inputNom" class="form-control" placeholder="Nom de l'ASN" required>
+                                        <div class="invalid-feedback">Le nom est obligatoire</div>
+                                    </div>
+                                    <div class="col-12 mt-5 text-end">
+                                        <button class="btn btn-red btn-sm"><span class="icon supprimer">Supprimer</span> </button>
+                                        <button class="btn btn-transparent btn-sm"><span class="icon annuler">Annuler</span></button>
+                                        <button class="btn btn-blue btn-sm"> <span class="icon ajouter">Ajouter</span> </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="loader-overlay" style="display: none;">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Chargement...</span>
+                        </div>
+                    </div>
+
+
+                </div>
             </div>
 
-            <div class="table-responsive mt-5">
-                <table id="liste" class="table table-striped table-hover table-sm table-liste text-nowrap">
-                    <thead>
-                    <tr>
-                        <th class="text-center">#</th>
-                        <th class="text-center">URL</th>
-                        <th class="text-center">APIKEY</th>
-                        <th class="text-center">STATUT</th>
-                        <th class="text-center">ACTIONS</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    {% for api_credential in api_credentials %}
-                        <tr>
-                            <td>{{ loop.index}}</td>
-                            <td>{{ api_credential.url }}</td>
-                            <td>{{ api_credential.apikey }}</td>
-                            <td>{{ api_credential.status ? 'ACTIVE' : 'DESCATIVEE' }}</td>
-                            <td>
-                                <a href="{{ path('app_api_credential_show', {'id': api_credential.id}) }}"><i class="bi bi-file-earmark-text"></i></a>
-                                <a href="{{ path('app_api_credential_edit', {'id': api_credential.id}) }}"><i class="bi bi-pencil-square"></i></a>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="5" class="text-center"> <em>Aucun enregistrement trouvé</em> </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-
-                </table>
-            </div>
         </div>
     </div>
 {% endblock %}
 
 {% block extra_stylesheets %}
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.dataTables.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.3/css/buttons.dataTables.css">
-{% endblock %}
-{% block extra_javascripts %}
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/buttons/3.2.3/js/dataTables.buttons.js"></script>
-    <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.dataTables.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.html5.min.js"></script>
-    <script>
-        document.addEventListener('turbo:load', function () {
-            const table = document.querySelector('#liste');
-            if (table && !table.classList.contains('dataTable-initialized')) {
-                new DataTable(table, {
-                    layout: {
-                        topStart: {
-                            buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']
-                        }
-                    },
-                    language: {
-                        url: 'https://cdn.datatables.net/plug-ins/2.3.0/i18n/fr-FR.json',
-                        paginate: {
-                            first: "Première",
-                            last: "Dernière",
-                            next: "Suiv",
-                            previous: "Préc"
-                        }
-                    }
-                });
+    <style>
+        .turbo-frame-error{
+            font-style: italic;
+            color: yellow;
+        }
 
-                table.classList.add('dataTable-initialized'); // éviter la double initialisation
-            }
+        .formulaire ul{
+            list-style: none;
+        }
+        .formulaire ul li{
+            font-style: italic;
+            color: yellow;
+        }
+    </style>
+
+{% endblock %}
+
+{% block extra_javascripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector(".formulaire");
+            const submitButton = document.querySelector("button[type='submit']");
+
+            form.addEventListener("submit", function () {
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Traitement...';
+            });
         });
 
     </script>

@@ -17,7 +17,7 @@ final class UserActionListener
     public function onTerminateEvent(TerminateEvent $event): void
     {
         $routeName = $event->getRequest()->attributes->get('_route');
-        $method = $event->getRequest()->getMethod() ?? null; dd($method);
+        $method = $event->getRequest()->getMethod() ?? null;
 
         $this->logAction($routeName, $method, $event);
     }
@@ -45,6 +45,21 @@ final class UserActionListener
                 if ($method === 'POST'){
                     $postData = $event->getRequest()->request->all();
                     $this->userActionLogger->log("Modification d'utilisateur",['action' => " a modifié l'utilisateur " . $postData['user_form']['email']]);
+                }
+                break;
+            case 'app_api_credential_show':
+                $this->userActionLogger->log("Consultation de la clé API", ['action' => ' a consulté les détails de la clé de l\'API']);
+                break;
+            case 'app_api_credential_new':
+                if ($method === 'POST'){
+                    $postData = $event->getRequest()->request->all();
+                    $this->userActionLogger->log("Enregistrement de ApiKey",['action' => " a enregistré la clé de l'API " . $postData['api_credential_form']['url']]);
+                }
+                break;
+            case 'app_api_credential_edit':
+                if ($method === 'POST'){
+                    $postData = $event->getRequest()->request->all();
+                    $this->userActionLogger->log("Modification de l'ApiKey",['action' => " a modifié l'ApiKey " . $postData['api_credential_form']['url']]);
                 }
                 break;
 

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ApiCredential;
 use App\Form\ApiCredentialForm;
 use App\Repository\ApiCredentialRepository;
+use App\Services\ApiKeyService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,12 +15,20 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/api-credential')]
 final class ApiCredentialController extends AbstractController
 {
+    public function __construct(private readonly ApiKeyService $apiKeyService)
+    {
+    }
+
     #[Route(name: 'app_api_credential_index', methods: ['GET'])]
     public function index(ApiCredentialRepository $apiCredentialRepository): Response
     {
-        return $this->render('api_credential/index.html.twig', [
-            'api_credentials' => $apiCredentialRepository->findAll(),
-        ]);
+        $api = $apiCredentialRepository->findOneBy([],['id' => 'DESC']);
+        if (!$api) {
+            return $this->redirectToRoute('app_api_credential_new',[],Response::HTTP_SEE_OTHER);
+        }
+        return $this->redirectToRoute('app_api_credential_show',[
+            'id' => $api->getId(),
+        ], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/new', name: 'app_api_credential_new', methods: ['GET', 'POST'])]
@@ -30,6 +39,8 @@ final class ApiCredentialController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $encryptedKey = $this->apiKeyService->encrypt($apiCredential->getApikey());
+            $apiCredential->setApikey($encryptedKey);
             $entityManager->persist($apiCredential);
             $entityManager->flush();
 
@@ -57,10 +68,19 @@ final class ApiCredentialController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $requestData = $form->getData();
+            $apiKey = $requestData->getApiKey();
+            if ($apiKey !== $request->getSession()->get('apiKey')){
+                $apiCredential->setApikey($this->apiKeyService->encrypt($apiKey));
+            }
             $entityManager->flush();
+
+            $request->getSession()->set('apiKey', '');
 
             return $this->redirectToRoute('app_api_credential_index', [], Response::HTTP_SEE_OTHER);
         }
+
+        $request->getSession()->set('apiKey', $apiCredential->getApikey());
 
         return $this->render('api_credential/edit.html.twig', [
             'api_credential' => $apiCredential,
