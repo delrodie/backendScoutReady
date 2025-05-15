@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block extra_title %} Gestions des erreurs {% endblock %}
+{% block body %}
+    <div id="mainContent" class="main-content expanded">
+        <div class="content">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 col-xl-6 offset-md-1 offset-lg-2 offset-xl-3">
+                    <h4 class="content-label">Gestion des erreurs</h4>
+                    <hr>
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="card-title text-center" style="font-weight: 900; font-size: 2.9rem; color: yellow">{{ status_code }}</h1>
+                            <p class="card-text text-center mt-5" style="font-size: 1.5rem; font-style: italic;">{{ message }}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_stylesheets %}
+    <style>
+        .turbo-frame-error{
+            font-style: italic;
+            color: yellow;
+        }
+
+        .formulaire ul{
+            list-style: none;
+        }
+        .formulaire ul li{
+            font-style: italic;
+            color: yellow;
+        }
+    </style>
+
+{% endblock %}
+
+{% block extra_javascripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector(".formulaire");
+            const submitButton = document.querySelector("button[type='submit']");
+
+            form.addEventListener("submit", function () {
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Traitement...';
+            });
+        });
+
+    </script>
+{% endblock %}
