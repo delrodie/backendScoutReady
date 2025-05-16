@@ -14,26 +14,28 @@
 
                     <div class="card mt-5">
                         <div class="card-body">
-                            <form action="{{ absolute_url(path('app_asn_new')) }}" method="post" class="formulaire g-3 needs-validation" id="api_asn_form" novalidate>
+                            <form action="{{ absolute_url(path('app_asn_edit',{"id": asn.id})) }}" method="post" class="formulaire g-3 needs-validation" id="formSubmit" novalidate>
                                 <div class="row form-group">
                                     <div class="col-12 mt-3">
                                         <label for="inputSigle" class="form-label">Sigle</label>
-                                        <input type="text" id="inputSigle" name="asn_sigle" class="form-control" placeholder="Sigle de l'ASN" autocomplete="off" required>
+                                        <input type="text" id="inputSigle" name="asn_sigle" class="form-control" value="{{ asn.sigle }}" autocomplete="off" required>
                                         <div class="invalid-feedback">Le sigle est obligatoire</div>
                                     </div>
                                     <div class="col-12 mt-3">
                                         <label for="inputNom" class="form-label">Nom</label>
-                                        <input type="text" id="inputNom" name="asn_nom" class="form-control" placeholder="Nom de l'ASN" autocomplete="off" required>
+                                        <input type="text" id="inputNom" name="asn_nom" class="form-control" value="{{ asn.nom|raw }}" autocomplete="off" required>
                                         <div class="invalid-feedback">Le nom est obligatoire</div>
                                     </div>
                                     <div class="col-12 mt-5 text-end">
-                                        <input type="hidden" name="_asnCsrfToken" value="{{ csrf_token('asnAdd') }}">
+                                        <input type="hidden" name="_asnCsrfToken" value="{{ csrf_token('asnUpdate') }}">
 {#                                        <button class="btn btn-red btn-sm"><span class="icon supprimer">Supprimer</span> </button>#}
+
                                         <a href="{{ absolute_url(path('app_asn_list')) }}" class="btn btn-transparent btn-sm"><span class="icon annuler">Annuler</span></a>
-                                        <button class="btn btn-blue btn-sm"> <span class="icon ajouter">Ajouter</span> </button>
+                                        <button class="btn btn-blue btn-sm"> <span class="icon modifier">Modifier</span> </button>
                                     </div>
                                 </div>
                             </form>
+                            {{ include('asn/_delete.html.twig') }}
                         </div>
                     </div>
 

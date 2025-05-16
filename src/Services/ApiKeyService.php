@@ -82,4 +82,50 @@ class ApiKeyService
         }
     }
 
+    public function sendData(string $url, array $data, string $method = 'POST', array $headers = [], array $options = []): array
+    {
+        $apiKey = $this->apiCredentialRepository->findOneBy(['status' => true]);
+        if (!$apiKey){
+            throw new HttpException(Response::HTTP_NOT_FOUND, "Clé API introuvable");
+        }
+
+        try{
+            // Les entêtes par defaut
+            $defaultHeaders = [
+                'x-api-key' => $this->decrypt($apiKey->getApikey()),
+                'Content-Type' => 'application/json'
+            ];
+            $headers = array_merge($defaultHeaders, $headers);
+
+            // Envoie de la requête HTTP avec HttpClient
+            $response = $this->httpClient->request(
+                $method,
+                $apiKey->getUrl() . $url,
+                [
+                    'headers' => $headers,
+                    'json' => $data,
+                ]
+            );
+
+            // Verifie du statut HTTP
+            $statusCode = $response->getStatusCode();
+            if ($statusCode !== Response::HTTP_OK && $statusCode !== Response::HTTP_CREATED) {
+                $rawContent = $response->getContent(false);
+                $decodedContent = json_decode($rawContent, true);
+
+                if (json_last_error() !== JSON_ERROR_NONE || !isset($decodedContent['detail'])){
+                    throw new HttpException($statusCode, "Erreur API : réponse invalide.");
+                }
+
+                throw new HttpException($statusCode, $decodedContent['detail']);
+            }
+
+            return $response->toArray();
+        } catch(HttpException $e){
+            throw $e;
+        } catch (\Throwable $e){
+            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, "Erreur lors de l'envoi des données : {$e->getMessage()}");
+        }
+    }
+
 }

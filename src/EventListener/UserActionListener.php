@@ -63,6 +63,22 @@ final class UserActionListener
                 }
                 break;
 
+            case 'app_asn_list':
+                $this->userActionLogger->log("Consultation liste ASNs", ['action' => " a consulté la liste des ASNs"]);
+                break;
+            case 'app_asn_new':
+                if ($method === 'POST'){
+                    $postData = $event->getRequest()->request->all();
+                    $this->userActionLogger->log("Enregistrement de ASN",['action' => " a enregistré l'ASN " . $postData['api_asn_form']['sigle']]);
+                }
+                break;
+            case 'app_asn_update':
+                if ($method === 'POST'){
+                    $postData = $event->getRequest()->request->all();
+                    $this->userActionLogger->log("Modification de ASN",['action' => " a modifié l'ASN " . $postData['api_asn_form']['sigle']]);
+                }
+                break;
+
             default:
                 break;
         }

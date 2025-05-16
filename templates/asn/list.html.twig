@@ -22,29 +22,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>AUTRE</td>
-                        <td>AUTRE</td>
-                        <td class="text-center">
-                            <a href="profile.html"><i class="bi bi-file-earmark-text"></i></a>
-                            |
-                            <a href="#"><i class="bi bi-pencil-square"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>ASCCI</td>
-                        <td>ASSOCIATION DES SCOUTS CATHOLIQUES DE CÔTE D'IVOIRE</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>ASN3</td>
-                        <td>ASN3</td>
-                        <td></td>
-                    </tr>
+                    {% for asn in asns %}
+                        <tr>
+                            <th class="text-center" scope="row">{{ loop.index }}</th>
+                            <td>{{ asn.sigle}}</td>
+                            <td>{{ asn.nom|raw }}</td>
+                            <td class="text-center">
+                                <a href="profile.html"><i class="bi bi-file-earmark-text"></i></a>
+                                |
+                                <a href="{{ absolute_url(path('app_asn_edit', {'id': asn.id })) }}"><i class="bi bi-pencil-square"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
 
                 </table>
