@@ -1,0 +1,8 @@
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+<form method="post" action="{{ path('app_asn_delete', {'id': asn.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer cette ASN?');">
+    <input type="hidden" name="asn_sigle" value="{{ asn.sigle }}">
+    <input type="hidden" name="asn_nom" value="{{ asn.nom }}">
+    <input type="hidden" name="_asnCsrfToken" value="{{ csrf_token('asnDelete' ~ asn.id) }}">
+    <button class="btn btn-red btn-sm"><span class="icon supprimer">Supprimer</span> </button>
+</form>
+{% endif %}

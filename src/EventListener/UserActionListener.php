@@ -110,6 +110,40 @@ final class UserActionListener
                 }
                 break;
 
+            case 'app_region_list':
+                $this->userActionLogger->log("Consultation liste Regions", ['action' => " a consulté la liste des régions"]);
+                break;
+
+            case 'app_region_new':
+                if ($method === 'POST') {
+                    $nom = $request->get('region_nom') ?? 'N/A';
+                    $asn = $request->get('region_asn') ?? 'N/A';
+                    $this->userActionLogger->log("Enregistrement de Region", [
+                        'action' => " a enregistré la région « $asn :: $nom »"
+                    ]);
+                }
+                break;
+
+            case 'app_region_update':
+                if ($method === 'POST') {
+                    $asn = $request->get('region_asn') ?? 'N/A';
+                    $nom = $request->get('region_nom') ?? 'N/A';
+                    $this->userActionLogger->log("Modification de Region", [
+                        'action' => " a modifié la région « $asn :: $nom » "
+                    ]);
+                }
+                break;
+
+            case 'app_region_delete':
+                if ($method === 'POST') {
+                    $asn = $request->get('region_asn') ?? 'N/A';
+                    $nom = $request->get('region_nom') ?? 'N/A';
+                    $this->userActionLogger->log("Suppression de Region", [
+                        'action' => " a supprimé la région « $asn :: $nom » "
+                    ]);
+                }
+                break;
+
             default:
                 break;
         }

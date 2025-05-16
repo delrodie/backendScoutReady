@@ -80,7 +80,7 @@
                         {% endif %}
                         {% if is_granted('ROLE_ASN') %}
                             <li class="nav-item">
-                                <a class="nav-link"><i class="bi bi-dice-5"></i> Région</a>
+                                <a href="{{ absolute_url(path('app_region_list')) }}" class="nav-link"><i class="bi bi-dice-5"></i> Région</a>
                             </li>
                         {% endif %}
                         {% if is_granted('ROLE_REGION') %}

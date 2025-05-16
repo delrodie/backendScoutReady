@@ -499,7 +499,9 @@ main {
 }
 
 .formulaire {
-    input {
+    input,
+    textarea,
+    select{
         &::placeholder {
             color: var(--color-lightgray);
             font-style: italic;
@@ -522,11 +524,19 @@ main {
         }
     }
 
-    .form-control {
+    .form-control,
+    .form-select{
         background: transparent !important;
         border-color: rgba(var(--color-lightgray), 0.5);
         color: var(--color-white);
         border-radius: 0;
+    }
+
+    .form-select{
+        option{
+            background: var(--color-blue);
+            color: var(--color-white);
+        }
     }
 
     .invalid-feedback {

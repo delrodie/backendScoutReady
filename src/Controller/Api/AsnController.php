@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Services\ApiKeyService;
 use App\Services\CacheAsnService;
-use App\Services\UtilityService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 #[Route('/backend/asn')]
 class AsnController extends AbstractController
@@ -81,8 +80,8 @@ class AsnController extends AbstractController
             $nom = trim((string)$request->get('asn_nom'));
 
             $data = [
-                'sigle' => $sigle !== $asn['sigle'] ? $sigle : $asn['sigle'],
-                'nom' => $nom !== $asn['nom'] ? $nom : $asn['nom'],
+                'sigle' => $sigle ?: $asn['sigle'],
+                'nom' => $nom ?: $asn['nom'],
             ];
 
             try {

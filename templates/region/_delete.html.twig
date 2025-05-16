@@ -1,0 +1,8 @@
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+    <form method="post" action="{{ path('app_region_delete', {'id': region.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer cette région?');">
+        <input type="hidden" name="region_asn" value="{{ region.asn['sigle'] }}">
+        <input type="hidden" name="region_nom" value="{{ region.nom }}">
+        <input type="hidden" name="_regionCsrfToken" value="{{ csrf_token('regionDelete' ~ region.id) }}">
+        <button class="btn btn-red btn-sm"><span class="icon supprimer">Supprimer</span> </button>
+    </form>
+{% endif %}

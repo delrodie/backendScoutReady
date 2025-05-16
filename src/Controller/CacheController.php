@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Services\CacheAsnService;
+use App\Services\CacheRegionService;
 use App\Services\UtilityService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class CacheController extends AbstractController
 {
     public function __construct(
-        private readonly CacheAsnService $cacheAsnService,
+        private readonly CacheAsnService $cacheAsnService, private readonly CacheRegionService $cacheRegionService,
     )
     {
     }
@@ -24,6 +25,7 @@ class CacheController extends AbstractController
     public function all(): Response
     {
         $this->cacheAsnService->invalidateAsnCache(); // Cache des ASNs
+        $this->cacheRegionService->clearAllRegionCache(); // Cache des region
 
         sweetalert()->success("La cache a été vidé avec succès!");
 
@@ -35,6 +37,7 @@ class CacheController extends AbstractController
     {
         match ($module){
             'asn' => $this->cacheAsnService->invalidateAsnCache(),
+            'region' => $this->cacheRegionService->clearAllRegionCache()
         };
 
         sweetalert()->success("Le cache a été supprimé avec succès!");
