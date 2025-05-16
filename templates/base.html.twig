@@ -123,6 +123,9 @@
                         <li class="nav-item">
                             <a href="{{ absolute_url(path('app_cache_delete_all')) }}" class="nav-link"><i class="bi bi-database-down"></i>Cache</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ absolute_url(path('app_config_redis_reel')) }}" class="nav-link"><i class="bi bi-database-fill-gear"></i>Redis</a>
+                        </li>
                     </ul>
                 </aside>
                 {% block body %}{% endblock %}

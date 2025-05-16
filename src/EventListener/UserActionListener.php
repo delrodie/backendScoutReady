@@ -99,6 +99,17 @@ final class UserActionListener
                 }
                 break;
 
+            case 'app_cache_delete_all':
+                $this->userActionLogger->log("Suppression du cache", ['action' => " a supprimé tous les caches."]);
+                break;
+
+            case 'app_cache_delete_module' :
+                if ($method === 'GET') {
+                    $module = strtoupper($request->get('module'));
+                    $this->userActionLogger->log("Suppression de cache",['action' => " a supprimer le cache $module"]);
+                }
+                break;
+
             default:
                 break;
         }

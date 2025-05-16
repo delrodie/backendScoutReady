@@ -8,7 +8,6 @@ use App\Services\CacheAsnService;
 use App\Services\UtilityService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -17,7 +16,6 @@ class CacheController extends AbstractController
 {
     public function __construct(
         private readonly CacheAsnService $cacheAsnService,
-        private readonly RequestStack $requestStack
     )
     {
     }
@@ -33,7 +31,7 @@ class CacheController extends AbstractController
     }
 
     #[Route('/{module}', name: 'app_cache_delete_module', methods: ['GET'])]
-    public function module(Request $request, string $module)
+    public function module(Request $request, string $module): Response
     {
         match ($module){
             'asn' => $this->cacheAsnService->invalidateAsnCache(),
