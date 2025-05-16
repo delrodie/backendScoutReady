@@ -19,7 +19,6 @@ class AsnController extends AbstractController
 {
     public function __construct(
         private readonly ApiKeyService $apiKeyService,
-        private readonly UtilityService $utilityService,
         private readonly CacheAsnService $cacheAsnService,
     ) {}
 
@@ -117,8 +116,12 @@ class AsnController extends AbstractController
             try {
                 $this->apiKeyService->sendData('/api/asns/' . $id, $asn, 'DELETE');
                 $this->cacheAsnService->invalidateAsnById($id); // Suppression du cache après suppression
+                $this->cacheAsnService->invalidateAsnCache(); // Suppression de la liste en cache
+
             } catch (HttpExceptionInterface $e) {
                 $this->cacheAsnService->invalidateAsnById($id); // Suppression du cache après suppression
+                $this->cacheAsnService->invalidateAsnCache();
+
                 return $this->handleException($e);
             }
         }

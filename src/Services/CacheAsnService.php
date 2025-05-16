@@ -17,7 +17,7 @@ class CacheAsnService
     public function getAllAsns(): array
     {
         return $this->asnCache->get('asn_all', function (ItemInterface $item){
-            $item->expiresAfter(604800);
+            $item->expiresAfter(604800); // Une semaine
             return $this->apiKeyService->fetchData('/api/asns');
         });
     }
@@ -25,7 +25,7 @@ class CacheAsnService
     public function getAsnById(int $id)
     {
         return $this->asnCache->get('asn_'.$id, function(ItemInterface $item) use($id) {
-            $item->expiresAfter(604800);
+            $item->expiresAfter(604800); //Une semaine
             return $this->apiKeyService->fetchData('/api/asns/'.$id);
         });
     }

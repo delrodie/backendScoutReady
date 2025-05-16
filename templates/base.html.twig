@@ -73,18 +73,25 @@
                         <li class="nav-item label">
                             <label for="">Rubriques</label>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ absolute_url(path('app_asn_list')) }}"><i class="bi bi-dice-6"></i> ASN</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link"><i class="bi bi-dice-5"></i> Région</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link"><i class="bi bi-dice-4"></i> Districts</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link"><i class="bi bi-dice-3"></i> Groupes</a>
-                        </li>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ absolute_url(path('app_asn_list')) }}"><i class="bi bi-dice-6"></i> ASN</a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_ASN') %}
+                            <li class="nav-item">
+                                <a class="nav-link"><i class="bi bi-dice-5"></i> Région</a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_REGION') %}
+                            <li class="nav-item">
+                                <a class="nav-link"><i class="bi bi-dice-4"></i> Districts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link"><i class="bi bi-dice-3"></i> Groupes</a>
+                            </li>
+                        {% endif %}
+
                         <li class="nav-item">
                             <a class="nav-link"><i class="bi bi-people"></i> Scouts</a>
                         </li>
@@ -112,6 +119,9 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ absolute_url(path('app_admin_user_logs')) }}" class="nav-link"><i class="bi bi-journal-text"></i>Logs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ absolute_url(path('app_cache_delete_all')) }}" class="nav-link"><i class="bi bi-database-down"></i>Cache</a>
                         </li>
                     </ul>
                 </aside>

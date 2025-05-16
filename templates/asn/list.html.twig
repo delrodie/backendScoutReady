@@ -8,7 +8,11 @@
 
             <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
                 <h6 class="content-title">Liste des asn</h6>
-                <a href="{{ absolute_url(path('app_asn_new')) }}" class="btn btn-blue"><span class="icon ajouter">Ajouter</span> </a>
+                <div>
+                    <a href="{{ absolute_url(path('app_cache_delete_module', {module: 'asn'})) }}" class="btn btn-transparent">Actualiser</a>
+                    <a href="{{ absolute_url(path('app_asn_new')) }}" class="btn btn-blue"><span class="icon ajouter">Ajouter</span> </a>
+                </div>
+
             </div>
 
             <div class="table-responsive mt-5">
@@ -28,7 +32,7 @@
                             <td>{{ asn.sigle}}</td>
                             <td>{{ asn.nom|raw }}</td>
                             <td class="text-center">
-                                <a href="profile.html"><i class="bi bi-file-earmark-text"></i></a>
+                                <a href="#"><i class="bi bi-file-earmark-text"></i></a>
                                 |
                                 <a href="{{ absolute_url(path('app_asn_edit', {'id': asn.id })) }}"><i class="bi bi-pencil-square"></i>
                                 </a>
