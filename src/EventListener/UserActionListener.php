@@ -28,6 +28,8 @@ final class UserActionListener
             return;
         }
 
+        $request = $event->getRequest();
+
         switch ($routeName) {
             case 'app_dashboard':
                 $this->userActionLogger->log("Consultation du dashboard", ['action' => ' a consulté le dashboard']);
@@ -66,16 +68,34 @@ final class UserActionListener
             case 'app_asn_list':
                 $this->userActionLogger->log("Consultation liste ASNs", ['action' => " a consulté la liste des ASNs"]);
                 break;
+
             case 'app_asn_new':
-                if ($method === 'POST'){
-                    $postData = $event->getRequest()->request->all();
-                    $this->userActionLogger->log("Enregistrement de ASN",['action' => " a enregistré l'ASN " . $postData['api_asn_form']['sigle']]);
+                if ($method === 'POST') {
+                    $sigle = $request->get('asn_sigle') ?? 'N/A';
+                    $nom = $request->get('asn_nom') ?? 'N/A';
+                    $this->userActionLogger->log("Enregistrement de ASN", [
+                        'action' => " a enregistré l'ASN « $sigle :: $nom »"
+                    ]);
                 }
                 break;
-            case 'app_asn_update':
-                if ($method === 'POST'){
-                    $postData = $event->getRequest()->request->all();
-                    $this->userActionLogger->log("Modification de ASN",['action' => " a modifié l'ASN " . $postData['api_asn_form']['sigle']]);
+
+            case 'app_asn_edit':
+                if ($method === 'POST') {
+                    $sigle = $request->get('asn_sigle') ?? 'N/A';
+                    $nom = $request->get('asn_nom') ?? 'N/A';
+                    $this->userActionLogger->log("Modification de ASN", [
+                        'action' => " a modifié l'ASN « $sigle :: $nom » "
+                    ]);
+                }
+                break;
+
+            case 'app_asn_delete':
+                if ($method === 'POST') {
+                    $sigle = $request->get('asn_sigle') ?? 'N/A';
+                    $nom = $request->get('asn_nom') ?? 'N/A';
+                    $this->userActionLogger->log("Suppression de ASN", [
+                        'action' => " a supprimé l'ASN « $sigle :: $nom » "
+                    ]);
                 }
                 break;
 
