@@ -40,7 +40,7 @@ class ApiKeyService
 
     public function fetchData(?string $ressource)
     {
-        $apiKey = $this->apiCredentialRepository->findOneBy([], ['id' => 'DESC']); //dd($apiKey);
+        $apiKey = $this->apiCredentialRepository->findOneBy(['status' => true]); //dd($apiKey);
         if (!$apiKey) {
             throw new HttpException(Response::HTTP_NOT_FOUND, "Clé API introuvable");
         }

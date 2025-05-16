@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Services\ApiKeyService;
+use App\Services\CacheAsnService;
 use App\Services\UtilityService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,14 +19,16 @@ class AsnController extends AbstractController
 {
     public function __construct(
         private readonly ApiKeyService $apiKeyService,
-        private readonly UtilityService $utilityService
+        private readonly UtilityService $utilityService,
+        private readonly CacheAsnService $cacheAsnService,
     ) {}
 
     #[Route('/', name: 'app_asn_list', methods: ['GET'])]
     public function list(): Response
     {
         try {
-            $asns = $this->apiKeyService->fetchData('/api/asns');
+//            $asns = $this->apiKeyService->fetchData('/api/asns');
+            $asns = $this->cacheAsnService->getAllAsns();
         } catch (HttpExceptionInterface $e) {
             return $this->handleException($e);
         }
@@ -52,6 +55,9 @@ class AsnController extends AbstractController
                     'sigle' => $sigle,
                     'nom' => $nom,
                 ], 'POST');
+
+                // Suppression des caches après la modification
+                $this->cacheAsnService->invalidateAsnCache();
 
                 sweetalert()->success("L'ASN « {$response['sigle']} » a été ajoutée avec succès.", [], 'Succès');
                 return $this->redirectToRoute('app_asn_list', [], Response::HTTP_SEE_OTHER);
@@ -82,6 +88,11 @@ class AsnController extends AbstractController
 
             try {
                 $response = $this->apiKeyService->sendData('/api/asns/' . $asn['id'], $data, 'PATCH');
+
+                // Suppression des caches après la modification
+                $this->cacheAsnService->invalidateAsnById($id);
+                $this->cacheAsnService->invalidateAsnCache();
+
                 sweetalert()->success("L'ASN « {$response['sigle']} » a été modifiée avec succès.", [], 'Succès');
                 return $this->redirectToRoute('app_asn_list', [], Response::HTTP_SEE_OTHER);
             } catch (HttpExceptionInterface $e) {
@@ -105,8 +116,9 @@ class AsnController extends AbstractController
         if ($this->isCsrfTokenValid('asnDelete' . $id, $request->getPayload()->getString('_asnCsrfToken'))) {
             try {
                 $this->apiKeyService->sendData('/api/asns/' . $id, $asn, 'DELETE');
-                sweetalert()->success("L'ASN « {$asn['sigle']} » a été supprimée avec succès.", [], 'Succès');
+                $this->cacheAsnService->invalidateAsnById($id); // Suppression du cache après suppression
             } catch (HttpExceptionInterface $e) {
+                $this->cacheAsnService->invalidateAsnById($id); // Suppression du cache après suppression
                 return $this->handleException($e);
             }
         }
@@ -117,7 +129,8 @@ class AsnController extends AbstractController
     private function getAsnById(int $id): array|RedirectResponse
     {
         try {
-            return $this->apiKeyService->fetchData('/api/asns/' . $id);
+//            return $this->apiKeyService->fetchData('/api/asns/' . $id);
+            return $this->cacheAsnService->getAsnById($id);
         } catch (HttpExceptionInterface $e) {
             return $this->handleException($e);
         }
