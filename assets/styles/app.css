@@ -84,6 +84,15 @@ a {
   background-color: rgba(95, 105, 126, 0.7);
 }
 
+.btn-lightgray {
+  background: var(--color-lightgray);
+  color: var(--color-white);
+  border-radius: 0;
+}
+.btn-lightgray:hover {
+  background-color: rgba(95, 105, 126, 0.5);
+}
+
 .bordered-left {
   border-left: solid 1px rgba(95, 105, 126, 0.5);
 }
@@ -125,6 +134,15 @@ a {
 }
 .icon.annuler::before {
   content: "\f623";
+}
+.icon.importer::before {
+  content: "\f8c2";
+}
+.icon.actualiser::before {
+  content: "\f116";
+}
+.icon.Envoyer::before {
+  content: "\f6c0";
 }
 
 header {
