@@ -34,6 +34,7 @@ final class UserActionListener
             'app_asn_list' => "Consultation liste ASNs",
             'app_cache_delete_all' => "Suppression du cache",
             'app_region_list' => "Consultation liste Regions",
+            'app_district_list' => "Consultation liste Districts",
         ];
 
         $dynamicActions = [
@@ -48,6 +49,9 @@ final class UserActionListener
             'app_region_new' => fn() => ["Enregistrement de Region", ['action' => " a enregistré la région « {$request->get('region_asn')} :: {$request->get('region_nom')} »"]],
             'app_region_update' => fn() => ["Modification de Region", ['action' => " a modifié la région « {$request->get('region_asn')} :: {$request->get('region_nom')} »"]],
             'app_region_delete' => fn() => ["Suppression de Region", ['action' => " a supprimé la région « {$request->get('region_asn')} :: {$request->get('region_nom')} »"]],
+            'app_district_new' => fn() => ["Enregistrement de District", ['action' => " a enregistré le district « {$request->get('district_region')} :: {$request->get('district_nom')} »"]],
+            'app_district_update' => fn() => ["Modification de District", ['action' => " a modifié le district « {$request->get('district_region')} :: {$request->get('district_nom')} »"]],
+            'app_district_delete' => fn() => ["Suppression de District", ['action' => " a supprimé le district « {$request->get('district_region')} :: {$request->get('district_nom')} »"]],
         ];
 
         if (isset($actionMap[$routeName])) {

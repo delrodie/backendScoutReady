@@ -5,7 +5,7 @@ import 'bootstrap';
 import './menu.js';
 
 $(document).ready(function() {
-    console.log("jQuery est prêt !");
+    console.log('select2')
 });
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Ici ces't le log");

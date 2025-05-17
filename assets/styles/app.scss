@@ -525,7 +525,8 @@ main {
     }
 
     .form-control,
-    .form-select{
+    .form-select,
+    .choices__inner{
         background: transparent !important;
         border-color: rgba(var(--color-lightgray), 0.5);
         color: var(--color-white);
@@ -537,6 +538,27 @@ main {
             background: var(--color-blue);
             color: var(--color-white);
         }
+    }
+
+    .choices__list--dropdown,
+    .choices__list[aria-expanded]{
+        background: var(--color-bluegrey);
+        color: var(--color-white);
+    }
+
+    .choices__list--dropdown .choices__item, 
+    .choices__list[aria-expanded] .choices__item{
+        &:hover{
+            background: var(--color-blue);
+        }
+    }
+
+    .is-focused{
+        color: red;
+    }
+
+    .choices__input{
+        background: rgba($color-darkblue, 0.5);
     }
 
     .invalid-feedback {

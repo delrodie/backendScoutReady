@@ -9,6 +9,7 @@ use App\Services\CacheAsnService;
 use App\Services\CacheRegionService;
 use Doctrine\ORM\Cache\Region;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -79,7 +80,7 @@ class RegionController extends AbstractController
     public function update(Request $request, $id)
     {
         $region = $this->getRegionById($id);
-        if ($region instanceof Region){
+        if ($region instanceof RedirectResponse){
             return $region;
         }
 

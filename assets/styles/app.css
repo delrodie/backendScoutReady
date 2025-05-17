@@ -413,7 +413,8 @@ main.connexion .card-title {
   color: rgb(189, 7, 7);
 }
 .formulaire .form-control,
-.formulaire .form-select {
+.formulaire .form-select,
+.formulaire .choices__inner {
   background: transparent !important;
   border-color: rgba(var(--color-lightgray), 0.5);
   color: var(--color-white);
@@ -422,6 +423,21 @@ main.connexion .card-title {
 .formulaire .form-select option {
   background: var(--color-blue);
   color: var(--color-white);
+}
+.formulaire .choices__list--dropdown,
+.formulaire .choices__list[aria-expanded] {
+  background: var(--color-bluegrey);
+  color: var(--color-white);
+}
+.formulaire .choices__list--dropdown .choices__item:hover,
+.formulaire .choices__list[aria-expanded] .choices__item:hover {
+  background: var(--color-blue);
+}
+.formulaire .is-focused {
+  color: red;
+}
+.formulaire .choices__input {
+  background: rgba(0, 15, 120, 0.5);
 }
 .formulaire .invalid-feedback {
   color: yellow !important;

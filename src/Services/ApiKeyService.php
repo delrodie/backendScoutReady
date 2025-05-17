@@ -38,7 +38,7 @@ class ApiKeyService
     }
 
 
-    public function fetchData(?string $ressource)
+    public function fetchData(?string $url)
     {
         $apiKey = $this->apiCredentialRepository->findOneBy(['status' => true]); //dd($apiKey);
         if (!$apiKey) {
@@ -48,7 +48,7 @@ class ApiKeyService
         try {
             $response = $this->httpClient->request(
                 'GET',
-                $apiKey->getUrl() . $ressource,
+                $apiKey->getUrl() . $url,
                 [
                     'headers' => [
                         'x-api-key' => $this->decrypt($apiKey->getApikey()),

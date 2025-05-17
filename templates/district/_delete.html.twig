@@ -1,0 +1,8 @@
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+    <form method="post" action="{{ path('app_district_delete', {'id': district.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ce district?');">
+        <input type="hidden" name="region_asn" value="{{ district.region['nom'] }}">
+        <input type="hidden" name="region_nom" value="{{ district.nom }}">
+        <input type="hidden" name="_districtCsrfToken" value="{{ csrf_token('districtDelete' ~ district.id) }}">
+        <button class="btn btn-red btn-sm"><span class="icon supprimer">Supprimer</span> </button>
+    </form>
+{% endif %}
