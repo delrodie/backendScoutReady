@@ -1,0 +1,8 @@
+{% if is_granted('ROLE_ADMIN') %}
+    <form method="post" action="{{ path('app_groupe_delete', {'id': groupe.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ce groupe?');">
+        <input type="hidden" name="groupe_district" value="{{ groupe.district.nom }}">
+        <input type="hidden" name="groupe_nom" value="{{ groupe.paroisse }}">
+        <input type="hidden" name="_groupeCsrfToken" value="{{ csrf_token('groupeDelete' ~ groupe.id) }}">
+        <button class="btn btn-red btn-sm"><span class="icon supprimer">Supprimer</span> </button>
+    </form>
+{% endif %}

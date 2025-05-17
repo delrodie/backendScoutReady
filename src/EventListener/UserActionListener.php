@@ -35,6 +35,7 @@ final class UserActionListener
             'app_cache_delete_all' => "Suppression du cache",
             'app_region_list' => "Consultation liste Regions",
             'app_district_list' => "Consultation liste Districts",
+            'app_groupe_list' => "Consultation liste groupes",
         ];
 
         $dynamicActions = [
@@ -52,6 +53,9 @@ final class UserActionListener
             'app_district_new' => fn() => ["Enregistrement de District", ['action' => " a enregistré le district « {$request->get('district_region')} :: {$request->get('district_nom')} »"]],
             'app_district_update' => fn() => ["Modification de District", ['action' => " a modifié le district « {$request->get('district_region')} :: {$request->get('district_nom')} »"]],
             'app_district_delete' => fn() => ["Suppression de District", ['action' => " a supprimé le district « {$request->get('district_region')} :: {$request->get('district_nom')} »"]],
+            'app_groupe_new' => fn() => ["Enregistrement de groupe", ['action' => " a enregistré le groupe « {$request->get('groupe_district')} :: {$request->get('groupe_nom')} »"]],
+            'app_groupe_update' => fn() => ["Modification de groupe", ['action' => " a modifié le groupe « {$request->get('groupe_district')} :: {$request->get('groupe_nom')} »"]],
+            'app_groupe_delete' => fn() => ["Suppression de groupe", ['action' => " a supprimé le groupe « {$request->get('groupe_district')} :: {$request->get('groupe_nom')} »"]],
         ];
 
         if (isset($actionMap[$routeName])) {
