@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Import;
 
-use App\Services\CacheDistrictService;
+use App\Services\Cache\CacheDistrictService;
 use App\Services\Import\DistrictExcelImporter;
 use App\Services\UserActionLogger;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/upload')]
+#[Route('/backend/district/upload')]
 class ImportDistrictController extends AbstractController
 {
     public function __construct(

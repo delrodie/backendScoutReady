@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use App\Services\ApiKeyService;
-use App\Services\CacheAsnService;
-use App\Services\CacheRegionService;
+use App\Services\Cache\CacheAsnService;
+use App\Services\Cache\CacheRegionService;
 use Doctrine\ORM\Cache\Region;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\Routing\Attribute\Route;
 

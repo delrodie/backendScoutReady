@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Services\CacheAsnService;
-use App\Services\CacheDistrictService;
-use App\Services\CacheGroupeService;
-use App\Services\CacheRegionService;
-use App\Services\UtilityService;
+use App\Services\Cache\CacheAsnService;
+use App\Services\Cache\CacheDistrictService;
+use App\Services\Cache\CacheGroupeService;
+use App\Services\Cache\CacheRegionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

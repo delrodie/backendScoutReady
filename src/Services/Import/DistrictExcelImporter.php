@@ -3,7 +3,7 @@
 namespace App\Services\Import;
 
 use App\Services\ApiKeyService;
-use App\Services\CacheRegionService;
+use App\Services\Cache\CacheRegionService;
 use App\Services\UserActionLogger;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

@@ -1,44 +1,33 @@
 {% extends 'base.html.twig' %}
-{% block extra_title %} Nouveau district {% endblock %}
+{% block extra_title %} Nouveau groupe {% endblock %}
 {% block body %}
     <div id="mainContent" class="main-content expanded">
         <div class="content">
             <div class="row">
                 <div class="col-md-10 col-lg-8 col-xl-6 offset-md-1 offset-lg-2 offset-xl-3">
-                    <h4 class="content-label">Gestion des districts</h4>
+                    <h4 class="content-label">Gestion des groupes</h4>
                     <hr>
                     <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
                         <h6 class="content-title">Formulaire</h6>
-                        <a href="{{ absolute_url(path('app_district_list')) }}" class="btn btn-blue"><span class="icon liste">Liste</span> </a>
+                        <a href="{{ absolute_url(path('app_groupe_list')) }}" class="btn btn-blue"><span class="icon liste">Liste</span> </a>
                     </div>
 
                     <div class="card mt-5">
                         <div class="card-body">
-                            <form action="{{ absolute_url(path('app_district_update',{id: district.id})) }}" method="post" class="formulaire g-3 needs-validation" id="api_region_form" novalidate>
+                            <form action="{{ absolute_url(path('app_groupe_upload')) }}" method="post" class="formulaire g-3 needs-validation" id="groupe_file_form" enctype="multipart/form-data" novalidate>
                                 <div class="row form-group">
                                     <div class="col-12 mt-3">
-                                        <label for="selectRegion" class="form-label">Région</label>
-                                        <select name="district_region" id="selectRegion" class="form-select js-choice">
-                                            <option value="{{ district.region['id'] }}">{{ district.region['nom'] }}</option>
-                                            {% for region in regions %}
-                                                <option value="{{ region.id }}">{{ region.asn['sigle']|raw }} - {{ region.nom }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                    <div class="col-12 mt-3">
-                                        <label for="inputNom" class="form-label">Nom du district</label>
-                                        <input type="text" id="inputNom" name="district_nom" class="form-control" value="{{ district.nom }}" autocomplete="off" required>
-                                        <div class="invalid-feedback">Le nom est obligatoire</div>
+                                        <label for="selectRegion" class="form-label">Importer la liste des groupes</label>
+                                        <input type="file" class="form-control" name="groupe_file" accept=".xlsx" required>
                                     </div>
                                     <div class="col-12 mt-5 text-end">
-                                        <input type="hidden" name="_districtCsrfToken" value="{{ csrf_token('districtAdd') }}">
+                                        <input type="hidden" name="_groupeCsrfToken" value="{{ csrf_token('groupeImported') }}">
                                         {#                                        <button class="btn btn-red btn-sm"><span class="icon supprimer">Supprimer</span> </button>#}
-                                        <a href="{{ absolute_url(path('app_district_list')) }}" class="btn btn-transparent btn-sm"><span class="icon annuler">Annuler</span></a>
-                                        <button class="btn btn-blue btn-sm"> <span class="icon modifier">Modifier</span> </button>
+                                        <a href="{{ absolute_url(path('app_groupe_list')) }}" class="btn btn-transparent btn-sm"><span class="icon annuler">Annuler</span></a>
+                                        <button class="btn btn-blue btn-sm"> <span class="icon envoyer">Envoyer</span> </button>
                                     </div>
                                 </div>
                             </form>
-                            {{ include('district/_delete.html.twig') }}
                         </div>
                     </div>
 

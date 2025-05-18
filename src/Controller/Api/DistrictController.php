@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use App\Services\ApiKeyService;
-use App\Services\CacheDistrictService;
-use App\Services\CacheRegionService;
+use App\Services\Cache\CacheDistrictService;
+use App\Services\Cache\CacheRegionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -92,8 +92,8 @@ class DistrictController extends AbstractController
             $district_nom = trim($request->get('district_nom'));
 
             $data = [
+                'nom' => (string) $district_nom ?: $district['nom'],
                 'region' => (int) $district_region ?: $district['region']['id'],
-                'nom' => (string) $district_nom ?: $district['nom']
             ];
 
             try {

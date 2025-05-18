@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Cache;
 
+use App\Services\ApiKeyService;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
