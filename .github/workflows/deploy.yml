@@ -1,0 +1,22 @@
+name: CD with Deployer
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      - name: Configuration PHP
+        uses: amateurish/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Déploiement avec Deployer
+        run: composer run dep deploy
