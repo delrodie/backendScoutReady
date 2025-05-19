@@ -15,7 +15,7 @@ add('writable_dirs', []);
 
 host('backstage.scoutready.net')
     ->set('remote_user', 'amdi3587')
-    ->set('deploy_path', '~/backstage');
+    ->set('deploy_path', '~/backstage/v1');
 
 // Hooks
 task('build', function (){
