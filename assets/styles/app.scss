@@ -518,6 +518,9 @@ main {
 
         @media screen and (min-width: 1200px) {
             width: 80%;
+            &.expanded{
+                width: 100%;
+            }
         }
     }
 }

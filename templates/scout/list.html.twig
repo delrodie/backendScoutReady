@@ -3,13 +3,13 @@
 
 {% block body %}
     <div id="mainContent" class="main-content expanded">
-        <div class="content">
+        <div class="content expanded">
             <h4 class="content-label">Gestion des scouts</h4>
 
             <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
                 <h6 class="content-title">Liste des scouts</h6>
                 <div>
-{#                    <a href="{{ absolute_url(path('app_scout_upload')) }}" class="btn btn-lightgray"><span class="icon importer">Importer</span> </a>#}
+                    <a href="{{ absolute_url(path('app_dashboard')) }}" class="btn btn-lightgray"><span class="icon retour">Retour</span> </a>
                     <a href="{{ absolute_url(path('app_cache_delete_module', {module: 'scout'})) }}" class="btn btn-transparent"><span class="icon actualiser">Actualiser</span> </a>
                     {% if is_granted("ROLE_SUPER_ADMIN") %}
                         <a href="{{ absolute_url(path('app_scout_new')) }}" class="btn btn-blue"><span class="icon ajouter">Ajouter</span> </a>
