@@ -8,6 +8,7 @@ use App\Services\Cache\CacheAsnService;
 use App\Services\Cache\CacheDistrictService;
 use App\Services\Cache\CacheGroupeService;
 use App\Services\Cache\CacheRegionService;
+use App\Services\Cache\CacheScoutService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,7 @@ class CacheController extends AbstractController
         private readonly CacheRegionService   $cacheRegionService,
         private readonly CacheDistrictService $cacheDistrictService,
         private readonly CacheGroupeService $cacheGroupeService,
+        private readonly CacheScoutService $cacheScoutService
     )
     {
     }
@@ -46,6 +48,7 @@ class CacheController extends AbstractController
             'region' => $this->cacheRegionService->clearAllRegionCache(),
             'district' => $this->cacheDistrictService->clearAllDistrictCache(),
             'groupe' => $this->cacheGroupeService->clearCacheGroupe(),
+            'scout' => $this->cacheScoutService->clearScoutCache(),
         };
 
         sweetalert()->success("Le cache a été supprimé avec succès!");
